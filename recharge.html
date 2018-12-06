@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./src/assets/lib/jquery.min.js"></script>
+  <title>充值页面</title>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #f1f5f8;
+  }
+
+  .min {
+    width: 958px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+    margin-top: -40px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    background: #fff;
+    border: solid 1px #dadada;
+    -webkit-box-shadow: 0px 5px 10px rgba(97, 163, 255, .15);
+    -moz-box-shadow: 0px 5px 10px rgba(97, 163, 255, .15);
+    box-shadow: 0px 5px 10px rgba(97, 163, 255, .15);
+    min-height: 660px;
+    _padding-bottom: 100px;
+  }
+
+  .pt25 {
+    padding-top: 25px;
+  }
+
+  .conTable {
+    width: 100%;
+  }
+
+  tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+
+  .conTable th {
+    font-weight: normal;
+    width: 200px;
+    text-align: right;
+    font-size: 14px;
+    color: #666666;
+    line-height: 65px;
+    vertical-align: top;
+    padding-right: 4px;
+  }
+
+  .conTable td {
+    width: 754px;
+    text-align: left;
+    line-height: 65px;
+    font-size: 14px;
+  }
+
+  .account {
+    width: 250px;
+  }
+
+  .conTable span {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 2px;
+  }
+
+  .conTable .customMoney {
+    width: 60px;
+  }
+
+  .inputTxt {
+    height: 39px;
+    width: 400px;
+    line-height: 39px;
+    padding: 0 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .btn {
+    display: block;
+    width: 117px;
+    height: 40px;
+    background-color: #4f75c0;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .conTable td b {
+    color: #ef4b01;
+    font-size: 16px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .conTable img {
+    vertical-align: middle;
+  }
+
+  .imgCheck {
+    width: 85px;
+    height: 32px;
+  }
+
+  .red {
+    color: red;
+  }
+
+  #UserIds,
+  #verificationcode,
+  #UserId {
+    display: none;
+  }
+
+  .head {
+    width: 100%;
+    height: 200px;
+    background-color: skyblue;
+  }
+
+  .btnBox {
+    border-radius: 15px;
+  }
+
+</style>
+
+<body>
+  <div class="head">
+
+  </div>
+  <div class="min">
+    <div class="content pt25">
+      <table class="conTable">
+        <tbody>
+          <tr>
+            <th>
+              您充值的账号：
+            </th>
+            <td>
+              <input type="text" class="inputTxt account" id="Username" placeholder="手机/邮箱/普通账号" onblur="accountname(this.value)">
+              <span id="UserId">
+                <span class="red">*</span> 账号不能为空</span>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              再次输入账号：
+            </th>
+            <td>
+              <input type="text" class="inputTxt account" id="Usernames" placeholder="手机/邮箱/普通账号" onblur="verificationpswd()">
+              <span id="UserIds">
+                <span class="red">*</span> 账号不能为空</span>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              充值金额：
+            </th>
+            <td>
+              <input type="text" class="inputTxt account" placeholder="其他金额" class="inputTxt customMoney" onblur="PayMoney(this.value)"
+                onkeyup="this.value=this.value.replace(/[^\d]/g,'');">
+              <span>元（人民币）</span>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              充值渠道：
+            </th>
+            <td>
+              <select style="width: 415px; height: 30px" id="moreBank" name="moreBank" onchange="ChangeMoreBank()">
+                <option value="PSBC">中国邮政储蓄银行</option>
+                <option value="SPDB">上海浦东发展银行</option>
+                <option value="CEB">中国光大银行</option>
+                <option value="BOB">北京银行</option>
+                <option value="CGB">广发银行</option>
+                <option value="CMBC">中国民生银行</option>
+                <option value="PAB">平安银行</option>
+                <option value="HXB">华夏银行</option>
+                <option value="CBHB">渤海银行</option>
+                <option value="ECITIC">中信银行</option>
+                <option value="CZB">浙商银行</option>
+                <option value="BOS">上海银行</option>
+                <option value="HZB">杭州银行</option>
+                <option value="BONJ">南京银行</option>
+                <option value="BJRCB">北京农村商业银行</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              验证码：
+            </th>
+            <td>
+              <input type="text" class="inputTxt " id="CheckCode" onblur="verificationcode(this.value,'verificationcode')">
+              <img src="https://captcha.tiancity.com/getimage.ashx?fid=600&amp;tid=8a6da90536e946e0bfbbe50f8fe5ebf5" class="imgCheck" id="imgCheckCode"
+                alt="" style="cursor: pointer">
+              <span class="checkBox">看不清，
+                <a href="javascript:;" class="imgCheckBtn" id="linkCheckCode">换一张</a>
+              </span>
+              <span id="CheckCodeMsgDiv">
+                <span class="checkError" id="verificationcode">
+                  <span class="red">*</span> 验证码不能为空</span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              应支付：
+            </th>
+            <td>
+              <b id="PayMoney">0.00</b>元
+              <input type="hidden" id="BankEventDiscount" value="5,10000,1">
+            </td>
+          </tr>
+          <tr>
+            <th>
+            </th>
+            <td class="btnBox">
+              <a href="javascript:;" class="btn" id="btnOK" onclick="submits()" style="border-radius: 5px;">立即充值</a>
+              ※入市有风险,投资须谨慎。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+<script>
+  var account = false;
+  var accountcode = false;
+  var verificationCode = false;
+  // 输入账号验证
+  function accountname(value) {
+    var myDiv = document.getElementById("UserId");
+    if (value.length == 0) {
+      myDiv.style.display = "inline-block";
+      account = false;
+      return false;
+    } else {
+      myDiv.style.display = "none";
+      account = true;
+    }
+  }
+  // 确认输入账号验证
+  function verificationpswd() {
+    var UserIds = document.getElementById("UserIds");
+    var Username = document.getElementById("Username");
+    var Usernames = document.getElementById("Usernames");
+    if (Usernames.value == "") {
+      UserIds.style.display = "inline-block";
+      accountcode = false;
+      return false;
+    } else if (Username.value == Usernames.value) {
+      UserIds.style.display = "none";
+      accountcode = true;
+      return false;
+    } else {
+      accountcode = false;
+      UserIds.style.display = "inline-block";
+      UserIds.innerHTML = '<span class="red">*</span> 两次输入的账号不一样</span>';
+    }
+  }
+  // 选择银行
+  function ChangeMoreBank(){
+    
+  }
+  // 输入验证码验证
+  function verificationcode(value, id) {
+    var myDiv = document.getElementById(id);
+    if (value.length == 0) {
+      myDiv.style.display = "inline-block";
+      verificationCode = false;
+      return false;
+    } else {
+      myDiv.style.display = "none";
+      verificationCode = true;
+    }
+  }
+  // 验证码刷新 
+  $('#linkCheckCode').click(function () {
+    var url = 'https://captcha.tiancity.com/getimage.ashx?fid=600&amp;tid=8a6da90536e946e0bfbbe50f8fe5ebf5';
+    $('#imgCheckCode').attr("src", url);
+  });
+
+  // 应支付金额验证
+  function PayMoney(value) {
+    var myDiv = document.getElementById("PayMoney");
+    if (value == 0) {
+      myDiv.innerText = "0.00";
+    } else {
+      var money = value.replace(/\b(0+)/gi, "");
+      myDiv.innerText = money + ".00";
+    }
+  }
+  // 提交充值
+  function submits() {
+    if( account == true && accountcode == true && verificationCode == true){
+      alert("系统正在升级中，请稍后再试！")
+    }else{
+      alert("信息输入有误！")
+    }
+    
+  }
+
+</script>
+
+</html>
